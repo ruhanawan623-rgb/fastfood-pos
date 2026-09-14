@@ -1,0 +1,382 @@
+/* ==========================================================================
+   ApexPOS - Kitchen Display System (KDS) & Live Tickets (Simple & Clean)
+   ========================================================================== */
+
+.kds-workspace {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-canvas);
+  overflow: hidden;
+}
+
+.kds-top-bar {
+  padding: 10px 18px;
+  background-color: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.kds-station-tabs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+}
+
+.kds-tab-btn {
+  padding: 6px 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all var(--trans-fast);
+  white-space: nowrap;
+}
+
+.kds-tab-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.kds-tab-btn.active {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border-color: var(--border-focus);
+}
+
+.kds-stats-cluster {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.kds-stat-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.kds-stat-value {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Tickets Board */
+.kds-tickets-board {
+  flex: 1;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 16px 18px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+/* Individual Ticket Card - Pixel-perfect matching reference */
+.kds-ticket-card {
+  width: 310px;
+  min-width: 310px;
+  background: #141720;
+  border: 1px solid #222836;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  border-top: 3px solid #10b981;
+}
+
+.kds-ticket-card.age-normal {
+  border-top-color: #ef4444;
+}
+
+.kds-ticket-card.age-warning {
+  border-top-color: #f59e0b;
+}
+
+.kds-ticket-card.age-urgent {
+  border-top-color: #ef4444;
+}
+
+.kds-ticket-header {
+  padding: 12px 16px 10px 16px;
+  background: #10121a;
+  border-bottom: 1px solid #1e2433;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.kds-ticket-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.kds-token-text {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.kds-type-pill {
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 3px 12px;
+  border-radius: 999px;
+  text-transform: lowercase;
+}
+
+.kds-type-pill.pill-dine-in,
+.kds-type-pill.dine-in {
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.14);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+}
+
+.kds-type-pill.pill-takeaway,
+.kds-type-pill.takeaway {
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.14);
+  border: 1px solid rgba(251, 191, 36, 0.25);
+}
+
+.kds-type-pill.pill-delivery,
+.kds-type-pill.delivery {
+  color: #c084fc;
+  background: rgba(192, 132, 252, 0.14);
+  border: 1px solid rgba(192, 132, 252, 0.25);
+}
+
+.kds-ticket-header-sub {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.78rem;
+}
+
+.kds-order-num {
+  color: #64748b;
+}
+
+.kds-timer-text {
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.kds-items-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.kds-item-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.kds-item-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.kds-item-qty {
+  width: 24px;
+  height: 24px;
+  background: #1e2433;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.kds-item-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #ffffff;
+}
+
+.kds-item-size {
+  font-size: 0.8rem;
+  color: #f59e0b;
+  font-weight: 500;
+  padding-left: 34px;
+}
+
+.kds-item-addons {
+  padding-left: 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.kds-addon-line {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.kds-ticket-actions {
+  padding: 12px 16px;
+  background: #10121a;
+  border-top: 1px solid #1e2433;
+}
+
+.kds-action-btn {
+  width: 100%;
+  height: 40px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all var(--trans-fast);
+}
+
+.kds-action-btn.start {
+  background: #1a202c;
+  color: #ffffff;
+  border: 1px solid #334155;
+}
+
+.kds-action-btn.start:hover {
+  background: #242c3d;
+  border-color: #475569;
+}
+
+.kds-action-btn.ready {
+  background: #10b981;
+  color: #ffffff;
+  border: none;
+}
+
+.kds-action-btn.ready:hover {
+  background: #059669;
+}
+
+/* ==========================================================================
+   Slide-Out Live Kitchen Orders Panel (Accessible from POS / entire website)
+   ========================================================================== */
+.drawer-panel-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(2px);
+  display: none;
+  justify-content: flex-end;
+  z-index: 1000;
+}
+
+.drawer-panel-overlay.active {
+  display: flex;
+}
+
+.drawer-panel {
+  width: 640px;
+  max-width: 95vw;
+  height: 100%;
+  background: var(--bg-surface);
+  border-left: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-lg);
+  animation: slideInRight 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.drawer-panel-header {
+  padding: 12px 18px;
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.drawer-panel-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+  align-content: start;
+}
+
+/* --------------------------------------------------------------------------
+   Light Mode Overrides for KDS Tickets (Taste-Skill)
+   -------------------------------------------------------------------------- */
+[data-theme="light"] .kds-ticket-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .kds-ticket-header {
+  background: #f8fafc;
+  border-bottom-color: #e2e8f0;
+}
+
+[data-theme="light"] .kds-token-text {
+  color: #0f172a;
+}
+
+[data-theme="light"] .kds-item-name {
+  color: #0f172a;
+}
+
+[data-theme="light"] .kds-item-qty {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+[data-theme="light"] .kds-addon-line {
+  color: #1e293b;
+}
+
+[data-theme="light"] .kds-ticket-actions {
+  background: #f8fafc;
+  border-top-color: #e2e8f0;
+}
+
+[data-theme="light"] .kds-action-btn.start {
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+}
+
+[data-theme="light"] .kds-action-btn.start:hover {
+  background: #f1f5f9;
+}

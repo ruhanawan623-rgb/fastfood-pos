@@ -1,0 +1,248 @@
+/* ==========================================================================
+   ApexPOS - Cash In / Out & Shift Drawer Styles (Simple & Clean)
+   ========================================================================== */
+
+.cash-workspace {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 18px 20px;
+  background-color: var(--bg-canvas);
+  overflow-y: auto;
+  gap: 16px;
+}
+
+/* Shift Summary Banner */
+.drawer-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.metric-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  box-shadow: none;
+  transition: border-color var(--trans-fast);
+}
+
+.metric-card:hover {
+  border-color: var(--border-focus);
+}
+
+.metric-card.highlight {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-focus);
+}
+
+.metric-label {
+  font-size: 0.74rem;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.metric-value {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Quick Action Controls Row */
+.drawer-controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+}
+
+.drawer-controls-info h3 {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 2px;
+}
+
+.drawer-controls-info p {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.drawer-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.drawer-btn {
+  height: 34px;
+  padding: 0 13px;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all var(--trans-fast);
+}
+
+.drawer-btn.in {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+}
+
+.drawer-btn.in:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-focus);
+}
+
+.drawer-btn.out {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+}
+
+.drawer-btn.out:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-focus);
+}
+
+.drawer-btn.close-shift {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  border: 1px solid var(--border-focus);
+  font-weight: 500;
+}
+
+.drawer-btn.close-shift:hover {
+  background: var(--border-focus);
+  color: #ffffff;
+}
+
+/* Ledger Transaction Table */
+.drawer-table-wrap {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.table-header-title {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cash-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.cash-table th {
+  padding: 10px 14px;
+  background: var(--bg-elevated);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.cash-table td {
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-muted);
+}
+
+.cash-table tr:hover td {
+  background-color: var(--bg-hover);
+  color: #ffffff;
+}
+
+/* Status pills */
+.type-pill {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-transform: none;
+  padding: 2px 7px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+}
+
+.type-pill.in {
+  background: rgba(52, 211, 153, 0.08);
+  color: #34d399;
+  border-color: rgba(52, 211, 153, 0.2);
+}
+
+.type-pill.out {
+  background: rgba(248, 113, 113, 0.08);
+  color: #f87171;
+  border-color: rgba(248, 113, 113, 0.2);
+}
+
+.type-pill.open {
+  background: rgba(147, 197, 253, 0.08);
+  color: #93c5fd;
+  border-color: rgba(147, 197, 253, 0.2);
+}
+
+.type-pill.sale {
+  background: rgba(251, 191, 36, 0.08);
+  color: #fbbf24;
+  border-color: rgba(251, 191, 36, 0.2);
+}
+
+.type-pill.refund {
+  background: rgba(248, 113, 113, 0.08);
+  color: #f87171;
+  border-color: rgba(248, 113, 113, 0.2);
+}
+
+/* Refined amounts */
+.amount-text {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.amount-text.positive {
+  color: #34d399;
+}
+
+.amount-text.negative {
+  color: #f87171;
+}

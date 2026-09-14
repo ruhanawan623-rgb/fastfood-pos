@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FastFood — Fast-Food Operations & POS System</title>
+  
+  <!-- Modern Typography: Outfit & Geist Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- CSS Design System -->
+  <link rel="stylesheet" href="css/tokens.css?v=10">
+  <link rel="stylesheet" href="css/layout.css?v=10">
+  <link rel="stylesheet" href="css/pos.css?v=10">
+  <link rel="stylesheet" href="css/kds.css?v=10">
+  <link rel="stylesheet" href="css/cash-drawer.css?v=10">
+  <link rel="stylesheet" href="css/dashboard.css?v=10">
+  <link rel="stylesheet" href="css/components.css?v=10">
+</head>
+<body>
+
+<div id="app-root">
+  <!-- Left Navigation Sidebar -->
+  <aside class="app-sidebar">
+    <div class="sidebar-header">
+      <div class="brand-badge">
+        <span class="nav-label" style="font-weight: 600; font-size: 1rem;">FastFood</span>
+      </div>
+      <button class="sidebar-toggle-btn" id="sidebar-toggle-btn" title="Toggle Sidebar">☰</button>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Overview</div>
+      <a class="nav-item active" data-view="dashboard">
+        <span class="nav-label">Dashboard</span>
+      </a>
+
+      <div class="nav-section-label">Operations</div>
+      <a class="nav-item" data-view="pos">
+        <span class="nav-label">Cashier</span>
+      </a>
+      <a class="nav-item" data-view="kds">
+        <span class="nav-label">Kitchen</span>
+        <span class="nav-badge" id="nav-kds-badge">3</span>
+      </a>
+      <a class="nav-item" data-view="orders">
+        <span class="nav-label">Orders</span>
+      </a>
+
+      <div class="nav-section-label">Money & Stock</div>
+      <a class="nav-item" data-view="cash">
+        <span class="nav-label">Cash Drawer</span>
+      </a>
+      <a class="nav-item" data-view="inventory">
+        <span class="nav-label">Stock</span>
+      </a>
+
+      <div class="nav-section-label">System</div>
+      <a class="nav-item" data-view="database">
+        <span class="nav-label">Database</span>
+      </a>
+      <a class="nav-item" data-view="reports">
+        <span class="nav-label">Reports</span>
+      </a>
+      <a class="nav-item" data-view="audit">
+        <span class="nav-label">Activity</span>
+      </a>
+      <a class="nav-item" data-view="settings">
+        <span class="nav-label">Settings</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-profile-pill" style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <div class="user-avatar" id="sidebar-user-avatar">AL</div>
+          <div class="user-meta">
+            <span class="user-name" id="sidebar-user-name">Ali</span>
+            <span class="user-role-badge" id="sidebar-user-role">Cashier</span>
+          </div>
+        </div>
+        <button class="quick-action-btn" id="sidebar-switch-user-btn" style="height: 24px; padding: 0 8px; font-size: 0.72rem; border-radius: 4px;" title="Switch Operator">Switch</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Viewport Workspace -->
+  <main class="main-viewport">
+    <!-- Top System Header -->
+    <header class="top-system-bar">
+      <div class="top-bar-left">
+        <h1 class="page-title" id="top-bar-page-title">Dashboard</h1>
+        <div class="branch-select-pill">
+          <span id="top-bar-branch-name">Downtown</span>
+        </div>
+      </div>
+
+      <div class="top-bar-right">
+        <button class="quick-action-btn" id="open-kitchen-drawer-btn" style="display: flex; align-items: center; gap: 6px;">
+          <span>Kitchen</span>
+          <span class="nav-badge" id="top-kds-badge">3</span>
+        </button>
+        <button class="quick-action-btn" id="theme-toggle-btn" title="Toggle Light / Dark mode" style="display: flex; align-items: center; gap: 6px;">
+          <span id="theme-btn-label">Light mode</span>
+        </button>
+        <div class="shift-status-pill" id="top-db-status-pill" title="SQLite Database Status" style="background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3);">
+          <span class="status-dot" style="background: #10b981;"></span>
+          <span id="top-db-status-label">SQLite Online</span>
+        </div>
+        <div class="shift-status-pill">
+          <span class="status-dot"></span>
+          <span>Shift 1 open</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Module Viewport Container -->
+    <div class="module-container">
+
+      <!-- 0. DASHBOARD OVERVIEW -->
+      <section class="module-view active" id="view-dashboard">
+        <div class="dashboard-workspace">
+          <!-- Top Header -->
+          <div class="dashboard-header">
+            <div class="dashboard-title-group">
+              <h2>Dashboard</h2>
+              <p>Today's sales, kitchen queue, and register balance</p>
+            </div>
+            <div class="dashboard-header-actions">
+              <button class="dashboard-quick-btn primary" id="dash-btn-new-order">+ New order</button>
+              <button class="dashboard-quick-btn" id="dash-btn-view-kitchen">Kitchen (<span id="dash-kds-badge">3</span>)</button>
+              <button class="dashboard-quick-btn" id="dash-btn-add-cash">Add cash</button>
+            </div>
+          </div>
+
+          <!-- Key Metrics Grid -->
+          <div class="dashboard-metrics-grid">
+            <div class="dash-metric-card">
+              <span class="dash-metric-label">Today's sales</span>
+              <span class="dash-metric-val" id="dash-total-sales">Rs.&nbsp;0.00</span>
+              <span class="dash-metric-sub" id="dash-orders-count">0 orders today</span>
+            </div>
+            <div class="dash-metric-card">
+              <span class="dash-metric-label">Cash in drawer</span>
+              <span class="dash-metric-val" id="dash-cash-drawer">Rs.&nbsp;0.00</span>
+              <span class="dash-metric-sub">Shift 1 active</span>
+            </div>
+            <div class="dash-metric-card">
+              <span class="dash-metric-label">Kitchen queue</span>
+              <span class="dash-metric-val" id="dash-kitchen-count">3</span>
+              <span class="dash-metric-sub" id="dash-kitchen-sub">Orders preparing</span>
+            </div>
+            <div class="dash-metric-card">
+              <span class="dash-metric-label">Average ticket</span>
+              <span class="dash-metric-val" id="dash-avg-order">Rs.&nbsp;0.00</span>
+              <span class="dash-metric-sub">Per completed order</span>
+            </div>
+          </div>
+
+          <!-- Hourly Sales Velocity & Channels (Taste-Skill / Stitch) -->
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <span class="dash-card-title">Hourly sales velocity</span>
+              <div class="dash-channel-pills">
+                <span class="dash-channel-tag dine-in">Dine-in 55%</span>
+                <span class="dash-channel-tag takeaway">Takeaway 32%</span>
+                <span class="dash-channel-tag delivery">Delivery 13%</span>
+              </div>
+            </div>
+            <div class="dash-card-body" style="padding-bottom: 12px;">
+              <div class="dash-chart-bars" id="dash-hourly-chart">
+                <div class="dash-bar-col"><div class="dash-bar" style="height: 35%;"></div><span class="dash-bar-time">11 AM</span></div>
+                <div class="dash-bar-col"><div class="dash-bar" style="height: 60%;"></div><span class="dash-bar-time">12 PM</span></div>
+                <div class="dash-bar-col"><div class="dash-bar peak" style="height: 95%;"></div><span class="dash-bar-time">1 PM</span></div>
+                <div class="dash-bar-col"><div class="dash-bar" style="height: 75%;"></div><span class="dash-bar-time">2 PM</span></div>
+                <div class="dash-bar-col"><div class="dash-bar" style="height: 45%;"></div><span class="dash-bar-time">3 PM</span></div>
+                <div class="dash-bar-col"><div class="dash-bar" style="height: 50%;"></div><span class="dash-bar-time">4 PM</span></div>
+                <div class="dash-bar-col"><div class="dash-bar" style="height: 70%;"></div><span class="dash-bar-time">5 PM</span></div>
+                <div class="dash-bar-col"><div class="dash-bar peak" style="height: 90%;"></div><span class="dash-bar-time">6 PM</span></div>
+                <div class="dash-bar-col"><div class="dash-bar" style="height: 65%;"></div><span class="dash-bar-time">7 PM</span></div>
+                <div class="dash-bar-col"><div class="dash-bar" style="height: 40%;"></div><span class="dash-bar-time">8 PM</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Main Two-Column Layout -->
+          <div class="dashboard-main-grid">
+            <!-- Left Column: Kitchen & Recent Orders -->
+            <div class="dash-col">
+              <!-- Live Kitchen Queue Strip -->
+              <div class="dash-card">
+                <div class="dash-card-header">
+                  <span class="dash-card-title">Live kitchen orders</span>
+                  <button class="dash-card-action" id="dash-goto-kitchen">Open kitchen &rarr;</button>
+                </div>
+                <div class="dash-card-body">
+                  <div class="dash-kitchen-strip" id="dash-kitchen-strip">
+                    <!-- Dynamically populated -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recent Orders -->
+              <div class="dash-card">
+                <div class="dash-card-header">
+                  <span class="dash-card-title">Recent orders</span>
+                  <button class="dash-card-action" id="dash-goto-orders">View all &rarr;</button>
+                </div>
+                <div class="dash-card-body" style="padding: 0;">
+                  <table class="dash-table">
+                    <thead>
+                      <tr>
+                        <th>Token</th>
+                        <th>Type</th>
+                        <th>Time</th>
+                        <th>Items</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="dash-recent-orders-body">
+                      <!-- Dynamically populated -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Top Items & Register Status -->
+            <div class="dash-col">
+              <!-- Top Selling Items -->
+              <div class="dash-card">
+                <div class="dash-card-header">
+                  <span class="dash-card-title">Top items today</span>
+                  <button class="dash-card-action" id="dash-goto-stock">Stock &rarr;</button>
+                </div>
+                <div class="dash-card-body">
+                  <div class="dash-top-products" id="dash-top-products-list">
+                    <!-- Dynamically populated -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Register & Cashier Info -->
+              <div class="dash-card">
+                <div class="dash-card-header">
+                  <span class="dash-card-title">Register status</span>
+                </div>
+                <div class="dash-card-body">
+                  <div class="dash-info-list">
+                    <div class="dash-info-item">
+                      <span class="dash-info-key">Cashier</span>
+                      <span class="dash-info-val">Ali</span>
+                    </div>
+                    <div class="dash-info-item">
+                      <span class="dash-info-key">Register</span>
+                      <span class="dash-info-val">POS Terminal #01</span>
+                    </div>
+                    <div class="dash-info-item">
+                      <span class="dash-info-key">Shift</span>
+                      <span class="dash-info-val">Morning Shift (Open)</span>
+                    </div>
+                    <div class="dash-info-item">
+                      <span class="dash-info-key">Starting cash</span>
+                      <span class="dash-info-val" id="dash-starting-cash">Rs.&nbsp;5,000.00</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 1. POS TERMINAL VIEW -->
+      <section class="module-view" id="view-pos">
+        <div class="pos-workspace">
+          <!-- Left: Product Selection Grid -->
+          <div class="pos-menu-column">
+            <div class="pos-top-controls">
+              <div class="pos-search-row">
+                <div class="pos-search-input-wrap">
+                  <input type="text" id="pos-search" class="pos-search-input" placeholder="Search menu or item..." style="padding-left: 14px;">
+                </div>
+                <button class="quick-action-btn" id="pos-kitchen-view-btn">Kitchen (<span id="pos-kds-count">3</span>)</button>
+                <button class="quick-action-btn" id="apply-coupon-btn">Discount</button>
+              </div>
+
+              <!-- Horizontal Category Rail -->
+              <div class="category-filter-rail" id="category-filter-rail">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <!-- Product Cards Grid -->
+            <div class="pos-products-container" id="pos-products-grid">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Right: Cart & Tender Calculator -->
+          <div class="pos-cart-column">
+            <div class="cart-header">
+              <div class="cart-order-info">
+                <span style="font-weight: 600; color: var(--text-secondary);">Order</span>
+                <span class="order-token-badge" id="cart-token-badge">T-101</span>
+              </div>
+
+              <div class="order-type-switch">
+                <button class="order-type-btn active" data-type="dine-in">Dine-in</button>
+                <button class="order-type-btn" data-type="takeaway">Takeaway</button>
+                <button class="order-type-btn" data-type="delivery">Delivery</button>
+              </div>
+            </div>
+
+            <!-- Scrollable Items List -->
+            <div class="cart-items-scroll" id="cart-items-container">
+              <!-- Dynamically populated -->
+            </div>
+
+            <!-- Calculation Footer -->
+            <div class="cart-summary-box">
+              <div class="calc-row">
+                <span>Subtotal</span>
+                <span id="calc-subtotal" style="font-family: var(--font-mono); font-weight: 500;">Rs. 0.00</span>
+              </div>
+              <div class="calc-row" id="calc-discount-row" style="display: none; color: var(--accent-emerald);">
+                <span>Discount</span>
+                <span id="calc-discount" style="font-family: var(--font-mono); font-weight: 600;">-Rs. 0.00</span>
+              </div>
+              <div class="calc-row">
+                <span>Tax (16%)</span>
+                <span id="calc-tax" style="font-family: var(--font-mono);">Rs. 0.00</span>
+              </div>
+              <div class="calc-row">
+                <span>Delivery fee</span>
+                <span id="calc-delivery" style="font-family: var(--font-mono);">Rs. 0.00</span>
+              </div>
+              <div class="calc-row total-row">
+                <span>Total</span>
+                <span class="total-amount" id="calc-grand-total">Rs. 0.00</span>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="cart-action-grid">
+              <button class="cart-btn void" id="cart-void-btn">
+                <span>Clear</span>
+              </button>
+              <button class="cart-btn hold" id="cart-hold-btn">
+                <span>Hold</span>
+              </button>
+              <button class="cart-btn pay" id="cart-pay-btn">
+                <span>Pay</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. KITCHEN DISPLAY SYSTEM (KDS) VIEW -->
+      <section class="module-view" id="view-kds">
+        <div class="kds-workspace">
+          <div class="kds-top-bar">
+            <div class="kds-station-tabs">
+              <button class="kds-tab-btn active" data-station="all">All</button>
+              <button class="kds-tab-btn" data-station="burger">Burgers</button>
+              <button class="kds-tab-btn" data-station="fryer">Fryer</button>
+              <button class="kds-tab-btn" data-station="pizza">Pizza</button>
+              <button class="kds-tab-btn" data-station="drinks">Drinks</button>
+            </div>
+
+            <div class="kds-stats-cluster">
+              <div class="kds-stat-badge">
+                <span>Active:</span>
+                <span class="kds-stat-value" id="kds-active-count">0</span>
+              </div>
+              <div class="kds-stat-badge">
+                <span>Avg time:</span>
+                <span class="kds-stat-value" id="kds-avg-prep">00:00</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- KDS Ticket Grid -->
+          <div class="kds-tickets-board" id="kds-tickets-board">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. CASH MANAGEMENT & SHIFT DRAWER VIEW -->
+      <section class="module-view" id="view-cash">
+        <div class="cash-workspace">
+          <!-- Summary Cards Banner -->
+          <div class="drawer-summary-grid">
+            <div class="metric-card">
+              <span class="metric-label">Starting cash</span>
+              <span class="metric-value" id="drawer-metric-opening">Rs.&nbsp;10,000.00</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">Cash sales</span>
+              <span class="metric-value" id="drawer-metric-sales">Rs.&nbsp;0.00</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">Cash in</span>
+              <span class="metric-value" id="drawer-metric-in">Rs.&nbsp;0.00</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">Cash out</span>
+              <span class="metric-value" id="drawer-metric-out">Rs.&nbsp;0.00</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">Refunds</span>
+              <span class="metric-value" id="drawer-metric-refunds">Rs.&nbsp;0.00</span>
+            </div>
+            <div class="metric-card highlight">
+              <span class="metric-label">In drawer</span>
+              <span class="metric-value" id="drawer-metric-expected">Rs.&nbsp;10,000.00</span>
+            </div>
+          </div>
+
+          <!-- Quick Actions Bar -->
+          <div class="drawer-controls-row">
+            <div class="drawer-controls-info">
+              <h3>Cash actions</h3>
+              <p>Add cash, take cash, or close shift</p>
+            </div>
+            <div class="drawer-btn-group">
+              <button class="drawer-btn in" id="drawer-cash-in-btn">+ Add cash</button>
+              <button class="drawer-btn out" id="drawer-cash-out-btn">- Take cash</button>
+              <button class="drawer-btn close-shift" id="drawer-close-shift-btn">Close shift</button>
+            </div>
+          </div>
+
+          <!-- Transactions Ledger Table -->
+          <div class="drawer-table-wrap">
+            <div class="table-header-title">
+              <span>Cash transactions</span>
+              <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: normal;">Recent</span>
+            </div>
+            <table class="cash-table">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Time</th>
+                  <th>Type</th>
+                  <th>Reason</th>
+                  <th>Amount</th>
+                  <th>Cashier</th>
+                  <th>Note</th>
+                </tr>
+              </thead>
+              <tbody id="cash-transactions-tbody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. INVENTORY & RECIPES VIEW -->
+      <section class="module-view" id="view-inventory">
+        <div class="cash-workspace">
+          <div class="drawer-controls-row">
+            <div class="drawer-controls-info">
+              <h3>Stock and items</h3>
+              <p>Items update automatically when orders are placed</p>
+            </div>
+            <div class="drawer-btn-group">
+              <button class="quick-action-btn primary" id="inventory-restock-btn">+ Add stock</button>
+            </div>
+          </div>
+
+          <div class="drawer-table-wrap">
+            <table class="cash-table">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Item</th>
+                  <th>In stock</th>
+                  <th>Low alert</th>
+                  <th>Status</th>
+                  <th>Cost</th>
+                  <th>Total value</th>
+                </tr>
+              </thead>
+              <tbody id="inventory-table-tbody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. ORDERS HISTORY VIEW -->
+      <section class="module-view" id="view-orders">
+        <div class="cash-workspace">
+          <div class="drawer-table-wrap">
+            <div class="table-header-title">
+              <span>Past orders</span>
+            </div>
+            <table class="cash-table">
+              <thead>
+                <tr>
+                  <th>Token</th>
+                  <th>Order id</th>
+                  <th>Time</th>
+                  <th>Type</th>
+                  <th>Total</th>
+                  <th>Payment</th>
+                  <th>Cashier</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="orders-table-tbody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. REPORTS & ANALYTICS VIEW -->
+      <section class="module-view" id="view-reports">
+        <div class="cash-workspace">
+          <div class="drawer-summary-grid">
+            <div class="metric-card">
+              <span class="metric-label">Sales</span>
+              <span class="metric-value" id="rep-total-revenue">Rs.&nbsp;0.00</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">Orders</span>
+              <span class="metric-value" id="rep-total-orders">0</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">Average</span>
+              <span class="metric-value" id="rep-avg-check">Rs.&nbsp;0.00</span>
+            </div>
+            <div class="metric-card highlight">
+              <span class="metric-label">Profit</span>
+              <span class="metric-value" id="rep-est-profit">Rs.&nbsp;0.00</span>
+            </div>
+          </div>
+
+          <div class="drawer-table-wrap" style="padding: 16px 20px;">
+            <h3 style="margin-bottom: 8px; font-size: 0.92rem;">Summary</h3>
+            <p style="color: var(--text-secondary); line-height: 1.6; font-size: 0.84rem;">
+              • Fast order checkout active.<br>
+              • Stock automatically tracks ingredients.<br>
+              • Shift closing matches cash in drawer.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. AUDIT LOGS VIEW -->
+      <section class="module-view" id="view-audit">
+        <div class="cash-workspace">
+          <div class="drawer-table-wrap">
+            <div class="table-header-title">
+              <span>Activity log</span>
+              <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: normal;">Recent actions</span>
+            </div>
+            <table class="cash-table">
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>User</th>
+                  <th>Action</th>
+                  <th>Details</th>
+                </tr>
+              </thead>
+              <tbody id="audit-table-tbody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. SETTINGS & BRANCHES VIEW -->
+      <section class="module-view" id="view-settings">
+        <div class="cash-workspace" style="max-width: 600px;">
+          <div class="drawer-table-wrap" style="padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+            <h3 style="font-size: 0.98rem;">Settings</h3>
+
+            <div class="form-group">
+              <label class="form-label">Branch:</label>
+              <select class="form-select" id="settings-branch-select">
+                <option value="b-01">Downtown</option>
+                <option value="b-02">Food Court</option>
+                <option value="b-03">North Kitchen</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Currency:</label>
+              <input type="text" class="form-input" value="Rs." readonly>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Tax rate:</label>
+              <input type="text" class="form-input" value="16%" readonly>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Appearance:</label>
+              <select class="form-select" id="settings-theme-select">
+                <option value="dark">Dark mode</option>
+                <option value="light">Light mode</option>
+              </select>
+            </div>
+
+            <div style="margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border-muted); display: flex; gap: 10px;">
+              <button class="quick-action-btn danger" id="btn-reset-demo-data">Reset data</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 9. DATABASE MANAGEMENT & INSPECTION VIEW -->
+      <section class="module-view" id="view-database">
+        <div class="cash-workspace">
+          <!-- Database Metrics -->
+          <div class="drawer-summary-grid" id="db-metrics-grid">
+            <div class="metric-card">
+              <span class="metric-label">Engine</span>
+              <span class="metric-value" id="db-metric-engine" style="font-size: 1.15rem;">SQLite v3</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">Total Records</span>
+              <span class="metric-value" id="db-metric-records">57</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">DB File Size</span>
+              <span class="metric-value" id="db-metric-size">80.0 KB</span>
+            </div>
+            <div class="metric-card highlight">
+              <span class="metric-label">Connection</span>
+              <span class="metric-value" id="db-metric-status" style="color: #10b981;">Connected</span>
+            </div>
+          </div>
+
+          <!-- Controls & Table Selector -->
+          <div class="drawer-controls-row" style="flex-wrap: wrap; gap: 12px;">
+            <div class="drawer-controls-info">
+              <h3>SQLite Database Tables</h3>
+              <p>Live relational tables stored persistently in <code style="font-family: var(--font-mono); font-size: 0.8rem; background: var(--bg-card); padding: 2px 6px; border-radius: 4px;">fastfood.db</code></p>
+            </div>
+            <div class="drawer-btn-group" style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <a href="/api/db/export" download="fastfood_backup.sql" class="quick-action-btn" id="db-export-btn" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; padding: 6px 12px;">
+                <span>⬇ Export SQL Backup</span>
+              </a>
+              <button class="quick-action-btn" id="db-refresh-btn">🔄 Refresh</button>
+              <button class="quick-action-btn danger" id="db-reset-btn">Reset Database</button>
+            </div>
+          </div>
+
+          <!-- Table Tabs Rail -->
+          <div class="category-rail" id="db-table-tabs" style="margin-bottom: 14px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 10px; display: flex; gap: 8px; overflow-x: auto;">
+            <button class="category-chip active" data-table="products">Products (17)</button>
+            <button class="category-chip" data-table="raw_materials">Raw Materials (19)</button>
+            <button class="category-chip" data-table="orders">Orders</button>
+            <button class="category-chip" data-table="cash_transactions">Cash Ledger</button>
+            <button class="category-chip" data-table="cash_sessions">Cash Sessions</button>
+            <button class="category-chip" data-table="audit_logs">Audit Logs</button>
+            <button class="category-chip" data-table="categories">Categories</button>
+          </div>
+
+          <!-- Table Content Viewer -->
+          <div class="drawer-table-wrap">
+            <div class="table-header-title">
+              <span id="db-table-title">products</span>
+              <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: normal;">Live SQLite Query</span>
+            </div>
+            <div style="overflow-x: auto; max-height: 520px;">
+              <table class="cash-table" id="db-inspector-table">
+                <thead id="db-inspector-thead">
+                  <!-- Dynamically populated -->
+                </thead>
+                <tbody id="db-inspector-tbody">
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- ==========================================================================
+     MODALS
+     ========================================================================== -->
+
+<!-- 1. Product Modifiers Modal -->
+<div class="modal-overlay" id="modifier-modal">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <h3 class="modal-title" id="modifier-modal-title">Customize</h3>
+      <button class="modal-close-btn">✕</button>
+    </div>
+    <div class="modal-body" id="modifier-modal-body">
+      <!-- Dynamically populated -->
+    </div>
+    <div class="modal-footer">
+      <button class="quick-action-btn modal-cancel-btn">Cancel</button>
+      <button class="quick-action-btn primary" id="modifier-confirm-btn">Add to cart</button>
+    </div>
+  </div>
+</div>
+
+<!-- 2. Payment Tender Modal -->
+<div class="modal-overlay" id="payment-modal">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <h3 class="modal-title">Pay order</h3>
+      <button class="modal-close-btn">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="background: var(--bg-card); padding: 14px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-weight: 500; color: var(--text-secondary);">Amount due:</span>
+        <span style="font-family: var(--font-mono); font-size: 1.25rem; font-weight: 600; color: #ffffff;" id="tender-due-amount">Rs. 0.00</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Payment method:</label>
+        <div class="tender-methods-grid">
+          <button type="button" class="tender-method-btn active" data-method="Cash">
+            <span>Cash</span>
+          </button>
+          <button type="button" class="tender-method-btn" data-method="Card">
+            <span>Card</span>
+          </button>
+          <button type="button" class="tender-method-btn" data-method="Online">
+            <span>Online</span>
+          </button>
+          <button type="button" class="tender-method-btn" data-method="Split">
+            <span>Split</span>
+          </button>
+        </div>
+      </div>
+
+      <div id="tender-cash-section">
+        <div class="form-group">
+          <label class="form-label">Cash given:</label>
+          <input type="number" id="tender-cash-input" class="form-input" style="font-family: var(--font-mono); font-size: 1.1rem; font-weight: 600;">
+        </div>
+
+        <div class="quick-cash-row" id="quick-denominations-grid">
+          <!-- Dynamically populated -->
+        </div>
+
+        <div style="margin-top: 12px; background: var(--bg-elevated); padding: 10px 14px; border-radius: var(--radius-md); display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-weight: 600; color: var(--text-secondary);">Change:</span>
+          <span style="font-family: var(--font-mono); font-size: 1.15rem; font-weight: 600; color: #34d399;" id="tender-change-due">Rs. 0.00</span>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="quick-action-btn modal-cancel-btn">Back</button>
+      <button class="quick-action-btn primary" id="confirm-payment-btn" style="min-width: 110px;">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- 3. Thermal Receipt Preview Modal -->
+<div class="modal-overlay" id="receipt-modal">
+  <div class="modal-dialog" style="background: var(--bg-canvas);">
+    <div class="modal-header">
+      <h3 class="modal-title">Receipt</h3>
+      <button class="modal-close-btn">✕</button>
+    </div>
+    <div class="modal-body" style="background: #1e1e24;" id="receipt-print-container">
+      <!-- Dynamically populated -->
+    </div>
+    <div class="modal-footer">
+      <button class="quick-action-btn modal-cancel-btn">Close</button>
+      <button class="quick-action-btn primary" onclick="window.print()">Print</button>
+    </div>
+  </div>
+</div>
+
+<!-- 4. Cash In / Out Modal -->
+<div class="modal-overlay" id="cash-tx-modal">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <h3 class="modal-title" id="cash-tx-title">Add or take cash</h3>
+      <button class="modal-close-btn">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Reason:</label>
+        <select class="form-select" id="cash-tx-reason">
+          <!-- Dynamically populated -->
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Amount (Rs.):</label>
+        <input type="number" class="form-input" id="cash-tx-amount" placeholder="e.g. 1500" style="font-family: var(--font-mono); font-weight: 600; font-size: 1rem;">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Note (optional):</label>
+        <input type="text" class="form-input" id="cash-tx-ref" placeholder="e.g. Receipt #104">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="quick-action-btn modal-cancel-btn">Cancel</button>
+      <button class="quick-action-btn primary" id="cash-tx-confirm-btn">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- 5. Shift Closing / Z-Report Modal -->
+<div class="modal-overlay" id="shift-closing-modal">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <h3 class="modal-title">Close shift</h3>
+      <button class="modal-close-btn">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="background: var(--bg-card); padding: 12px 14px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-weight: 500;">Expected cash:</span>
+        <span style="font-family: var(--font-mono); font-weight: 600; font-size: 1.15rem; color: #ffffff;" id="closing-expected-cash">Rs. 0.00</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Cash counted in drawer (Rs.):</label>
+        <input type="number" class="form-input" id="closing-actual-input" style="font-family: var(--font-mono); font-weight: 600; font-size: 1.15rem;">
+      </div>
+
+      <div style="background: var(--bg-elevated); padding: 12px 14px; border-radius: var(--radius-md); display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-weight: 600;">Difference:</span>
+        <span style="font-family: var(--font-mono); font-weight: 600; font-size: 1.15rem;" id="closing-difference-display">Rs. 0.00</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Notes (optional):</label>
+        <textarea class="form-input" id="closing-notes-input" style="height: 54px; padding: 8px; resize: none;" placeholder="Discrepancy or notes..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="quick-action-btn modal-cancel-btn">Cancel</button>
+      <button class="quick-action-btn primary" id="confirm-close-shift-btn">Close shift</button>
+    </div>
+  </div>
+</div>
+
+<!-- Slide-Out Live Kitchen Orders Panel -->
+<div class="drawer-panel-overlay" id="kitchen-drawer-overlay">
+  <div class="drawer-panel">
+    <div class="drawer-panel-header">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <h3 style="font-size: 0.95rem; font-weight: 600;">Kitchen Orders</h3>
+        <span class="nav-badge" id="drawer-kds-badge">3</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <button class="quick-action-btn" id="drawer-go-kitchen-view" style="height: 28px; font-size: 0.78rem;">Full screen</button>
+        <button class="modal-close-btn" id="close-kitchen-drawer-btn">✕</button>
+      </div>
+    </div>
+    <div class="drawer-panel-body" id="drawer-kitchen-board">
+      <!-- Dynamically populated -->
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Toast Notifications Shelf -->
+<div id="toast-shelf"></div>
+
+<!-- Application Entry Point (Bundle works offline via file:// and via localhost) -->
+<script src="js/bundle.js?v=16"></script>
+
+</body>
+</html>
