@@ -18,10 +18,21 @@ if sys.platform == "win32":
     import io
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Load from .env file if available
+env_file = os.path.join(PROJECT_DIR, ".env")
+if os.path.exists(env_file):
+    with open(env_file, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if line and not line.startswith("#") and "=" in line:
+                k, v = line.split("=", 1)
+                os.environ.setdefault(k.strip(), v.strip())
+
 API_TOKEN = os.environ.get("CLOUDFLARE_API_TOKEN", "")
 ACCOUNT_ID = os.environ.get("CLOUDFLARE_ACCOUNT_ID", "3416b41cb65e87044027bd5303691a8d")
 PROJECT_NAME = "fastfood-pos"
-PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 mimetypes.init()
 mimetypes.add_type("text/css", ".css")
