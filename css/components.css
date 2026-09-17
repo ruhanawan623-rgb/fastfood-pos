@@ -263,4 +263,74 @@
   to { transform: translateX(0); opacity: 1; }
 }
 
+/* ==========================================================================
+   Modals & Components Responsive Media Queries
+   ========================================================================== */
+
+@media (max-width: 600px) {
+  .modal-overlay {
+    padding: 10px;
+    align-items: flex-end; /* Slide up nicely on phones like a bottom sheet */
+  }
+
+  .modal-dialog {
+    max-width: 100%;
+    width: 100%;
+    max-height: 92vh;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+
+  .modal-header {
+    padding: 12px 16px;
+  }
+
+  .modal-body {
+    padding: 14px 16px;
+    gap: 12px;
+  }
+
+  .modal-footer {
+    padding: 12px 16px;
+    padding-bottom: calc(12px + var(--safe-area-bottom));
+  }
+
+  .tender-methods-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+
+  .tender-method-btn {
+    padding: 10px 8px;
+    font-size: 0.82rem;
+  }
+
+  .quick-cash-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+
+  .cash-chip {
+    padding: 10px 8px;
+    font-size: 0.88rem;
+  }
+
+  .thermal-receipt {
+    width: 100%;
+    max-width: 310px;
+    padding: 14px 10px;
+  }
+
+  #toast-shelf {
+    left: 12px;
+    right: 12px;
+    bottom: calc(64px + var(--safe-area-bottom)); /* Above the bottom cart bar if open */
+  }
+
+  .toast {
+    font-size: 0.8rem;
+    padding: 10px 14px;
+  }
+}
+
+
 

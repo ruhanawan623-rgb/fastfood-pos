@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>FastFood — Fast-Food Operations & POS System</title>
   
   <!-- Modern Typography: Outfit & Geist Mono -->
@@ -11,13 +11,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   
   <!-- CSS Design System -->
-  <link rel="stylesheet" href="css/tokens.css?v=10">
-  <link rel="stylesheet" href="css/layout.css?v=10">
-  <link rel="stylesheet" href="css/pos.css?v=10">
-  <link rel="stylesheet" href="css/kds.css?v=10">
-  <link rel="stylesheet" href="css/cash-drawer.css?v=10">
-  <link rel="stylesheet" href="css/dashboard.css?v=10">
-  <link rel="stylesheet" href="css/components.css?v=10">
+  <link rel="stylesheet" href="css/tokens.css?v=21">
+  <link rel="stylesheet" href="css/layout.css?v=21">
+  <link rel="stylesheet" href="css/pos.css?v=21">
+  <link rel="stylesheet" href="css/kds.css?v=21">
+  <link rel="stylesheet" href="css/cash-drawer.css?v=21">
+  <link rel="stylesheet" href="css/dashboard.css?v=21">
+  <link rel="stylesheet" href="css/components.css?v=21">
 </head>
 <body>
 
@@ -28,7 +28,10 @@
       <div class="brand-badge">
         <span class="nav-label" style="font-weight: 600; font-size: 1rem;">FastFood</span>
       </div>
-      <button class="sidebar-toggle-btn" id="sidebar-toggle-btn" title="Toggle Sidebar">☰</button>
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <button class="sidebar-toggle-btn" id="sidebar-toggle-btn" title="Toggle Sidebar">☰</button>
+        <button class="sidebar-close-btn" id="sidebar-close-btn" title="Close Menu">✕</button>
+      </div>
     </div>
 
     <nav class="sidebar-nav">
@@ -86,11 +89,15 @@
     </div>
   </aside>
 
+  <!-- Mobile Backdrop Overlay -->
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
   <!-- Main Viewport Workspace -->
   <main class="main-viewport">
     <!-- Top System Header -->
     <header class="top-system-bar">
       <div class="top-bar-left">
+        <button class="mobile-menu-btn" id="mobile-menu-btn" title="Open Navigation Menu" aria-label="Open Navigation">☰</button>
         <h1 class="page-title" id="top-bar-page-title">Dashboard</h1>
         <div class="branch-select-pill">
           <span id="top-bar-branch-name">Downtown</span>
@@ -209,21 +216,23 @@
                   <button class="dash-card-action" id="dash-goto-orders">View all &rarr;</button>
                 </div>
                 <div class="dash-card-body" style="padding: 0;">
-                  <table class="dash-table">
-                    <thead>
-                      <tr>
-                        <th>Token</th>
-                        <th>Type</th>
-                        <th>Time</th>
-                        <th>Items</th>
-                        <th>Total</th>
-                        <th>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody id="dash-recent-orders-body">
-                      <!-- Dynamically populated -->
-                    </tbody>
-                  </table>
+                  <div class="dash-table-wrap">
+                    <table class="dash-table">
+                      <thead>
+                        <tr>
+                          <th>Token</th>
+                          <th>Type</th>
+                          <th>Time</th>
+                          <th>Items</th>
+                          <th>Total</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody id="dash-recent-orders-body">
+                        <!-- Dynamically populated -->
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
@@ -304,8 +313,11 @@
           <div class="pos-cart-column">
             <div class="cart-header">
               <div class="cart-order-info">
-                <span style="font-weight: 600; color: var(--text-secondary);">Order</span>
-                <span class="order-token-badge" id="cart-token-badge">T-101</span>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="font-weight: 600; color: var(--text-secondary);">Order</span>
+                  <span class="order-token-badge" id="cart-token-badge">T-101</span>
+                </div>
+                <button class="cart-mobile-back-btn" id="cart-mobile-back-btn" title="Back to menu">← Menu</button>
               </div>
 
               <div class="order-type-switch">
@@ -356,6 +368,15 @@
                 <span>Pay</span>
               </button>
             </div>
+          </div>
+
+          <!-- Mobile Sticky Bottom Cart Trigger Bar -->
+          <div class="pos-mobile-cart-bar" id="pos-mobile-cart-bar">
+            <div class="pos-mobile-cart-info">
+              <span class="pos-mobile-cart-badge" id="mobile-cart-badge">0 items</span>
+              <span class="pos-mobile-cart-total" id="mobile-cart-total">Rs. 0.00</span>
+            </div>
+            <button class="pos-mobile-cart-btn" id="mobile-view-cart-btn">View Cart &rarr;</button>
           </div>
         </div>
       </section>
@@ -876,7 +897,7 @@
 <div id="toast-shelf"></div>
 
 <!-- Application Entry Point (Bundle works offline via file:// and via localhost) -->
-<script src="js/bundle.js?v=16"></script>
+<script src="js/bundle.js?v=20"></script>
 
 </body>
 </html>

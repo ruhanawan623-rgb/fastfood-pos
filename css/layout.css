@@ -357,9 +357,231 @@
   width: 100%;
   height: 100%;
   display: none;
-  overflow-y: auto;
+  overflow: hidden;
+  min-width: 0;
+  min-height: 0;
 }
 
 .module-view.active {
   display: flex;
+  flex-direction: column;
+}
+
+/* Mobile Navigation Components */
+.mobile-menu-btn {
+  display: none;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all var(--trans-fast);
+}
+
+.mobile-menu-btn:hover, .mobile-menu-btn:active {
+  background: var(--bg-hover);
+  border-color: var(--border-focus);
+}
+
+.sidebar-close-btn {
+  display: none;
+  background: transparent;
+  border: 1px solid var(--border-muted);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  width: 30px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background var(--trans-fast), color var(--trans-fast);
+}
+
+.sidebar-close-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 95;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--trans-smooth);
+}
+
+.sidebar-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ==========================================================================
+   Responsive Media Queries (Mobile & Tablet)
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  #app-root {
+    height: 100dvh;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    padding-bottom: var(--safe-area-bottom);
+    padding-top: var(--safe-area-top);
+  }
+
+  .mobile-menu-btn {
+    display: flex;
+  }
+
+  .sidebar-close-btn {
+    display: flex;
+  }
+
+  .sidebar-toggle-btn {
+    display: none !important;
+  }
+
+  /* Off-Canvas Sidebar Drawer on Mobile */
+  .app-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 275px;
+    max-width: 82vw;
+    z-index: 100;
+    transform: translateX(-100%);
+    transition: transform var(--trans-smooth);
+    box-shadow: none;
+    border-right: 1px solid var(--border-focus);
+  }
+
+  .app-sidebar.mobile-open {
+    transform: translateX(0);
+    box-shadow: 0 0 35px rgba(0, 0, 0, 0.85);
+  }
+
+  /* When collapsed class is toggled on mobile, don't shrink width */
+  .app-sidebar.collapsed {
+    width: 275px;
+    min-width: 275px;
+  }
+  .app-sidebar.collapsed .nav-label,
+  .app-sidebar.collapsed .nav-badge,
+  .app-sidebar.collapsed .nav-section-label {
+    display: block !important;
+  }
+
+  /* Top Bar Mobile Optimization */
+  .top-system-bar {
+    padding: 0 10px;
+    height: 50px;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  .top-bar-left {
+    gap: 8px;
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .mobile-menu-btn {
+    width: 34px;
+    height: 34px;
+    font-size: 1.05rem;
+    flex-shrink: 0;
+  }
+
+  .page-title {
+    font-size: clamp(0.85rem, 3.2vw, 0.96rem);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+  }
+
+  .branch-select-pill {
+    display: none; /* Hide verbose branch badge on small mobile screens */
+  }
+
+  .top-bar-right {
+    gap: 5px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  #open-kitchen-drawer-btn {
+    height: 32px;
+    padding: 0 8px;
+    gap: 4px;
+  }
+  #open-kitchen-drawer-btn span:first-child {
+    display: none;
+  }
+  #open-kitchen-drawer-btn::before {
+    content: "🍳";
+    font-size: 0.82rem;
+  }
+
+  #theme-toggle-btn {
+    height: 32px;
+    padding: 0 8px;
+  }
+  #theme-toggle-btn span {
+    display: none;
+  }
+  #theme-toggle-btn::before {
+    content: "🌓";
+    font-size: 0.85rem;
+  }
+
+  #top-db-status-label {
+    display: none; /* Keep the green status dot, hide long label */
+  }
+
+  #top-db-status-pill {
+    padding: 6px 8px;
+    height: 32px;
+  }
+
+  .shift-status-pill span:not(.status-dot) {
+    display: none;
+  }
+  .shift-status-pill {
+    padding: 6px 8px;
+    height: 32px;
+    gap: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .top-system-bar {
+    padding: 0 8px;
+    height: 48px;
+    gap: 4px;
+  }
+
+  .top-bar-left {
+    gap: 6px;
+  }
+
+  .mobile-menu-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 0.95rem;
+  }
 }

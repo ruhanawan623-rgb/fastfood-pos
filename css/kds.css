@@ -380,3 +380,74 @@
 [data-theme="light"] .kds-action-btn.start:hover {
   background: #f1f5f9;
 }
+
+/* ==========================================================================
+   Kitchen Display System Mobile Media Queries
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .kds-top-bar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .kds-station-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+    width: 100%;
+  }
+  .kds-station-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .kds-tab-btn {
+    padding: 6px 12px;
+    font-size: 0.78rem;
+    flex-shrink: 0;
+  }
+
+  .kds-stats-cluster {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  /* Single-column vertical scroll on mobile */
+  .kds-tickets-board {
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 12px;
+    gap: 12px;
+    align-items: stretch;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .kds-ticket-card {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  .kds-action-btn {
+    height: 40px;
+    font-size: 0.82rem;
+  }
+
+  /* Slide-out kitchen drawer on mobile */
+  .drawer-panel {
+    width: 100%;
+    max-width: 100vw;
+  }
+
+  .drawer-panel-body {
+    grid-template-columns: 1fr;
+    padding: 10px;
+  }
+}
+
+

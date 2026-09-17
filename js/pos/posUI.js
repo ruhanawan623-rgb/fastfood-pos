@@ -54,9 +54,27 @@ export class POSUI {
         if (confirm("Clear this order?")) {
           store.logAudit("CLEAR_CART", `Cleared cart with ${store.state.cart.items.length} items`);
           store.clearCart();
+          document.querySelector('.pos-cart-column')?.classList.remove('mobile-open');
           this.renderCart();
           window.showToast("Order cleared", "info");
         }
+      });
+    }
+
+    // Mobile View Cart Drawer button
+    const mobileViewCartBtn = document.getElementById('mobile-view-cart-btn');
+    const posCartCol = document.querySelector('.pos-cart-column');
+    if (mobileViewCartBtn && posCartCol) {
+      mobileViewCartBtn.addEventListener('click', () => {
+        posCartCol.classList.add('mobile-open');
+      });
+    }
+
+    // Mobile Back to Menu button
+    const cartMobileBackBtn = document.getElementById('cart-mobile-back-btn');
+    if (cartMobileBackBtn && posCartCol) {
+      cartMobileBackBtn.addEventListener('click', () => {
+        posCartCol.classList.remove('mobile-open');
       });
     }
 
@@ -352,6 +370,17 @@ export class POSUI {
     }
 
     document.getElementById('calc-grand-total').innerText = CartEngine.formatCurrency(totals.grandTotal);
+
+    // Update Mobile Cart Bar Counters
+    const mobileCartBadge = document.getElementById('mobile-cart-badge');
+    const mobileCartTotal = document.getElementById('mobile-cart-total');
+    const totalItemCount = items.reduce((sum, item) => sum + (item.qty || 1), 0);
+    if (mobileCartBadge) {
+      mobileCartBadge.innerText = `${totalItemCount} item${totalItemCount === 1 ? '' : 's'}`;
+    }
+    if (mobileCartTotal) {
+      mobileCartTotal.innerText = CartEngine.formatCurrency(totals.grandTotal);
+    }
   }
 
   openPaymentModal() {
@@ -461,6 +490,7 @@ export class POSUI {
 
     // Reset Cart
     store.clearCart();
+    document.querySelector('.pos-cart-column')?.classList.remove('mobile-open');
     this.renderCart();
     this.renderProducts(); // update remaining stock badges
     modulesUI.renderKDSTickets(); // update kitchen tickets & badge
