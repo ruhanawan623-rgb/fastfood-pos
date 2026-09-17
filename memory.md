@@ -226,14 +226,16 @@ Open in browser at: `http://localhost:5501`
 ## 8. Cloudflare Pages Deployment
 
 - **Project Name**: `fastfood-pos`
-- **Live Production URL**: [https://fastfood-pos-dwl.pages.dev](https://fastfood-pos-dwl.pages.dev)
-- **Account ID**: `3416b41cb65e87044027bd5303691a8d`
-- **Deploy Script**: `deploy_cloudflare.py`
-  - Automatically compiles the latest JS bundle (`build_bundle.py`).
-  - Directly uploads missing assets via Cloudflare Direct Upload REST API.
-  - Generates atomic manifest deployment.
-- **Re-deploy Command**:
-  ```powershell
-  python deploy_cloudflare.py
-  ```
+- **Live Production URL**: [https://fastfood-pos-4qz.pages.dev](https://fastfood-pos-4qz.pages.dev)
+- **Account ID**: `3416b41cb65e87044027bd5303691a8d` (`Sufyaanbhatti77@gmail.com`)
+- **API Token**: Stored securely in local `.env` (git-ignored) as `CLOUDFLARE_API_TOKEN`
+- **Continuous Deployment**:
+  - Connected directly to GitHub repo `ruhanawan623-rgb/fastfood-pos` (`main` branch).
+  - Every git push to `main` automatically triggers a Cloudflare Pages build and edge deployment.
+- **Direct Upload Script**:
+  - `deploy_cloudflare.py` loads `.env` for direct REST API deployment.
+  - Command:
+    ```powershell
+    python deploy_cloudflare.py
+    ```
 
