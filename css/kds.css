@@ -50,9 +50,10 @@
 }
 
 .kds-tab-btn.active {
-  background: var(--bg-elevated);
-  color: var(--text-primary);
-  border-color: var(--border-focus);
+  background: var(--accent-amber);
+  color: #000000;
+  font-weight: 700;
+  border-color: var(--accent-amber);
 }
 
 .kds-stats-cluster {
@@ -75,7 +76,7 @@
   color: var(--text-primary);
 }
 
-/* Tickets Board */
+/* Tickets Grid Board (Horizontal Flow on Desktop) */
 .kds-tickets-board {
   flex: 1;
   overflow-x: auto;
@@ -86,7 +87,7 @@
   align-items: flex-start;
 }
 
-/* Individual Ticket Card - Pixel-perfect matching reference */
+/* Individual Ticket Card */
 .kds-ticket-card {
   width: 310px;
   min-width: 310px;
@@ -98,19 +99,13 @@
   overflow: hidden;
   position: relative;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
-  border-top: 3px solid #10b981;
+  border-top: 3px solid var(--accent-amber);
 }
 
-.kds-ticket-card.age-normal {
-  border-top-color: #ef4444;
-}
-
-.kds-ticket-card.age-warning {
-  border-top-color: #f59e0b;
-}
-
+.kds-ticket-card.age-normal,
+.kds-ticket-card.age-warning,
 .kds-ticket-card.age-urgent {
-  border-top-color: #ef4444;
+  border-top-color: var(--accent-amber);
 }
 
 .kds-ticket-header {
@@ -137,31 +132,24 @@
 
 .kds-type-pill {
   font-size: 0.74rem;
-  font-weight: 600;
+  font-weight: 500;
   padding: 3px 12px;
   border-radius: 999px;
   text-transform: lowercase;
+  background: var(--bg-hover);
+  border: 1px solid var(--border-focus);
+  color: var(--text-secondary);
 }
 
 .kds-type-pill.pill-dine-in,
-.kds-type-pill.dine-in {
-  color: #38bdf8;
-  background: rgba(56, 189, 248, 0.14);
-  border: 1px solid rgba(56, 189, 248, 0.25);
-}
-
+.kds-type-pill.dine-in,
 .kds-type-pill.pill-takeaway,
-.kds-type-pill.takeaway {
-  color: #fbbf24;
-  background: rgba(251, 191, 36, 0.14);
-  border: 1px solid rgba(251, 191, 36, 0.25);
-}
-
+.kds-type-pill.takeaway,
 .kds-type-pill.pill-delivery,
 .kds-type-pill.delivery {
-  color: #c084fc;
-  background: rgba(192, 132, 252, 0.14);
-  border: 1px solid rgba(192, 132, 252, 0.25);
+  color: var(--text-primary);
+  background: var(--bg-hover);
+  border: 1px solid var(--border-focus);
 }
 
 .kds-ticket-header-sub {
@@ -273,13 +261,15 @@
 }
 
 .kds-action-btn.ready {
-  background: #10b981;
-  color: #ffffff;
-  border: none;
+  background: var(--accent-amber);
+  color: #000000;
+  font-weight: 700;
+  border: 1px solid var(--accent-amber);
 }
 
 .kds-action-btn.ready:hover {
-  background: #059669;
+  background: var(--accent-amber-dark);
+  border-color: var(--accent-amber-dark);
 }
 
 /* ==========================================================================

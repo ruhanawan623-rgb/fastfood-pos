@@ -136,7 +136,7 @@
   top: 8px;
   bottom: 8px;
   width: 3px;
-  background-color: #ffffff;
+  background-color: var(--accent-amber);
   border-radius: 0 4px 4px 0;
 }
 
@@ -302,15 +302,17 @@
 }
 
 .quick-action-btn.primary {
-  background-color: #f4f4f5;
-  color: #09090b;
-  border-color: #ffffff;
+  background-color: var(--accent-amber);
+  color: #000000;
+  border-color: var(--accent-amber);
   font-weight: 700;
   box-shadow: var(--shadow-sm);
 }
 
 .quick-action-btn.primary:hover {
-  background-color: #ffffff;
+  background-color: var(--accent-amber-dark);
+  border-color: var(--accent-amber-dark);
+  color: #000000;
 }
 
 .quick-action-btn.danger {
@@ -321,8 +323,8 @@
 
 .quick-action-btn.danger:hover {
   background-color: var(--bg-hover);
-  color: #f87171;
-  border-color: rgba(248, 113, 113, 0.4);
+  color: var(--text-primary);
+  border-color: var(--border-focus);
 }
 
 .shift-status-pill {
@@ -341,9 +343,9 @@
 .status-dot {
   width: 6px;
   height: 6px;
-  background-color: #34d399;
+  background-color: var(--accent-amber);
   border-radius: 50%;
-  box-shadow: 0 0 4px #34d399;
+  box-shadow: 0 0 6px rgba(245, 158, 11, 0.6);
 }
 
 /* Module Container */

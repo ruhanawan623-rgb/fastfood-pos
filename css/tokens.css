@@ -23,17 +23,19 @@
   --text-muted: #71717a;
   --text-inverse: #09090b;
 
-  /* Refined, Calm Accents (Used minimally and purposefully) */
-  --accent-primary: #ffffff;
-  --accent-subtle: #27272a;
+  /* Single Unified Brand Accent: Warm Amber (#f59e0b) */
+  --accent-primary: #f59e0b;
   --accent-amber: #f59e0b;
-  --accent-amber-glow: rgba(245, 158, 11, 0.08);
-  --accent-emerald: #10b981;
-  --accent-emerald-glow: rgba(16, 185, 129, 0.08);
-  --accent-crimson: #ef4444;
-  --accent-crimson-glow: rgba(239, 68, 68, 0.08);
-  --accent-sky: #38bdf8;
-  --accent-sky-glow: rgba(56, 189, 248, 0.08);
+  --accent-amber-glow: rgba(245, 158, 11, 0.12);
+  --accent-amber-dark: #d97706;
+  --accent-amber-light: #fbbf24;
+  --accent-subtle: #27272a;
+  --accent-emerald: #f59e0b;
+  --accent-emerald-glow: rgba(245, 158, 11, 0.12);
+  --accent-sky: #f59e0b;
+  --accent-sky-glow: rgba(245, 158, 11, 0.12);
+  --accent-crimson: #71717a;
+  --accent-crimson-glow: rgba(255, 255, 255, 0.05);
 
   /* Typography Specs */
   --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -86,17 +88,17 @@
   --text-muted: #64748b;
   --text-inverse: #ffffff;
 
-  /* Refined Semantic Accents */
-  --accent-primary: #0f172a;
+  /* Single Unified Brand Accent: Warm Amber */
+  --accent-primary: #d97706;
   --accent-subtle: #f1f5f9;
   --accent-amber: #d97706;
   --accent-amber-glow: rgba(217, 119, 6, 0.08);
-  --accent-emerald: #059669;
-  --accent-emerald-glow: rgba(5, 150, 105, 0.08);
-  --accent-crimson: #dc2626;
-  --accent-crimson-glow: rgba(220, 38, 38, 0.08);
-  --accent-sky: #0284c7;
-  --accent-sky-glow: rgba(2, 132, 199, 0.08);
+  --accent-emerald: #d97706;
+  --accent-emerald-glow: rgba(217, 119, 6, 0.08);
+  --accent-crimson: #64748b;
+  --accent-crimson-glow: rgba(0, 0, 0, 0.05);
+  --accent-sky: #d97706;
+  --accent-sky-glow: rgba(217, 119, 6, 0.08);
 
   /* Clean Light Mode Shadows */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);

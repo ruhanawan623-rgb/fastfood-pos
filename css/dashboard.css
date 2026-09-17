@@ -50,10 +50,10 @@
 .dashboard-quick-btn {
   height: 38px;
   padding: 0 16px;
-  background: #141722;
-  border: 1px solid #232a3b;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
   border-radius: 8px;
-  color: #e2e8f0;
+  color: var(--text-primary);
   font-size: 0.84rem;
   font-weight: 600;
   cursor: pointer;
@@ -64,8 +64,8 @@
 }
 
 .dashboard-quick-btn:hover {
-  background: #1c2233;
-  border-color: #3b82f6;
+  background: var(--bg-hover);
+  border-color: var(--border-focus);
   color: #ffffff;
   transform: translateY(-1px);
 }
@@ -75,14 +75,16 @@
 }
 
 .dashboard-quick-btn.primary {
-  background: #10b981;
-  color: #ffffff;
-  border-color: #10b981;
+  background: var(--accent-amber);
+  color: #000000;
+  border-color: var(--accent-amber);
+  font-weight: 700;
 }
 
 .dashboard-quick-btn.primary:hover {
-  background: #059669;
-  border-color: #059669;
+  background: var(--accent-amber-dark);
+  border-color: var(--accent-amber-dark);
+  color: #000000;
 }
 
 /* Key Metrics Grid (Asymmetric & Deep Contrast) */
@@ -107,14 +109,14 @@
 }
 
 .dash-metric-card {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.025) 0%, rgba(255, 255, 255, 0) 100%), #12151e;
-  border: 1px solid #1f2638;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
   border-radius: 12px;
   padding: 18px 20px;
   display: flex;
   flex-direction: column;
   gap: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow-sm);
   transition: all var(--trans-fast);
   position: relative;
   overflow: hidden;
@@ -122,14 +124,14 @@
 }
 
 .dash-metric-card:hover {
-  border-color: #334155;
+  border-color: var(--border-focus);
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  box-shadow: var(--shadow-md);
 }
 
 .dash-metric-label {
   font-size: 0.78rem;
-  color: #94a3b8;
+  color: var(--text-secondary);
   font-weight: 500;
   letter-spacing: 0.02em;
   white-space: nowrap;
@@ -150,8 +152,8 @@
 
 .dash-metric-sub {
   font-size: 0.75rem;
-  color: #10b981;
-  font-weight: 600;
+  color: var(--accent-amber);
+  font-weight: 500;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -166,27 +168,20 @@
 
 .dash-channel-tag {
   font-size: 0.72rem;
-  font-weight: 600;
+  font-weight: 500;
   padding: 3px 10px;
   border-radius: 999px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
 }
 
-.dash-channel-tag.dine-in {
-  color: #38bdf8;
-  background: rgba(56, 189, 248, 0.12);
-  border: 1px solid rgba(56, 189, 248, 0.25);
-}
-
-.dash-channel-tag.takeaway {
-  color: #fbbf24;
-  background: rgba(251, 191, 36, 0.12);
-  border: 1px solid rgba(251, 191, 36, 0.25);
-}
-
+.dash-channel-tag.dine-in,
+.dash-channel-tag.takeaway,
 .dash-channel-tag.delivery {
-  color: #c084fc;
-  background: rgba(192, 132, 252, 0.12);
-  border: 1px solid rgba(192, 132, 252, 0.25);
+  color: var(--text-primary);
+  background: var(--bg-hover);
+  border: 1px solid var(--border-focus);
 }
 
 .dash-chart-bars {
@@ -196,7 +191,7 @@
   gap: 8px;
   height: 90px;
   padding: 10px 4px 4px 4px;
-  border-bottom: 1px solid #1f2533;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .dash-bar-col {
@@ -212,24 +207,24 @@
 .dash-bar {
   width: 100%;
   max-width: 24px;
-  background: #1e293b;
+  background: var(--border-focus);
   border-radius: 4px 4px 0 0;
   transition: all 0.3s ease;
   min-height: 8px;
 }
 
 .dash-bar:hover {
-  background: #38bdf8;
+  background: var(--accent-amber-light);
   transform: scaleY(1.05);
 }
 
 .dash-bar.peak {
-  background: #10b981;
+  background: var(--accent-amber);
 }
 
 .dash-bar-time {
   font-size: 0.68rem;
-  color: #64748b;
+  color: var(--text-muted);
   font-weight: 500;
 }
 
@@ -260,13 +255,13 @@
 
 /* Card Surface */
 .dash-card {
-  background: #12151e;
-  border: 1px solid #1f2638;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
   border-radius: 12px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+  box-shadow: var(--shadow-sm);
   min-width: 0;
   max-width: 100%;
   width: 100%;
@@ -274,8 +269,8 @@
 
 .dash-card-header {
   padding: 14px 18px;
-  background: #0f121a;
-  border-bottom: 1px solid #1c2233;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -284,13 +279,13 @@
 .dash-card-title {
   font-size: 0.92rem;
   font-weight: 600;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
 .dash-card-action {
   font-size: 0.78rem;
   font-weight: 600;
-  color: #38bdf8;
+  color: var(--accent-amber);
   background: none;
   border: none;
   cursor: pointer;
@@ -299,7 +294,7 @@
 }
 
 .dash-card-action:hover {
-  color: #ffffff;
+  color: var(--accent-amber-light);
   text-decoration: underline;
 }
 
@@ -317,25 +312,25 @@
 
 .dash-mini-ticket {
   min-width: 220px;
-  background: #151822;
-  border: 1px solid #242c3d;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
   border-radius: 10px;
   padding: 14px;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  border-top: 3px solid #ef4444;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  border-top: 3px solid var(--accent-amber);
+  box-shadow: var(--shadow-sm);
   transition: all var(--trans-fast);
 }
 
 .dash-mini-ticket:hover {
   transform: translateY(-2px);
-  border-color: #334155;
+  border-color: var(--border-focus);
 }
 
 .dash-mini-ticket.warning {
-  border-top-color: #f59e0b;
+  border-top-color: var(--accent-amber);
 }
 
 .dash-mini-header {
@@ -352,7 +347,7 @@
 
 .dash-mini-items {
   font-size: 0.8rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   line-height: 1.4;
   font-weight: 500;
 }
@@ -363,7 +358,7 @@
   align-items: center;
   margin-top: 4px;
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .dash-mini-btn {
@@ -377,13 +372,15 @@
 }
 
 .dash-mini-btn.start {
-  background: #1e293b;
-  color: #ffffff;
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  border: 1px solid var(--border-muted);
 }
 
 .dash-mini-btn.ready {
-  background: #10b981;
-  color: #ffffff;
+  background: var(--accent-amber);
+  color: #000000;
+  font-weight: 700;
 }
 
 /* Recent Orders Table Wrap */
@@ -406,17 +403,17 @@
 .dash-table th {
   text-align: left;
   padding: 10px 14px;
-  color: #64748b;
+  color: var(--text-muted);
   font-weight: 600;
-  border-bottom: 1px solid #1e2433;
+  border-bottom: 1px solid var(--border-subtle);
   font-size: 0.74rem;
-  background: #0f121a;
+  background: var(--bg-surface);
 }
 
 .dash-table td {
   padding: 12px 14px;
-  border-bottom: 1px solid #1a202c;
-  color: #cbd5e1;
+  border-bottom: 1px solid var(--border-muted);
+  color: var(--text-secondary);
 }
 
 .dash-table tr:last-child td {
@@ -437,9 +434,9 @@
   font-size: 0.72rem;
   padding: 2px 8px;
   border-radius: 999px;
-  background: rgba(16, 185, 129, 0.12);
-  color: #10b981;
-  border: 1px solid rgba(16, 185, 129, 0.25);
+  background: var(--accent-amber-glow);
+  color: var(--accent-amber);
+  border: 1px solid rgba(245, 158, 11, 0.3);
   font-weight: 600;
   display: inline-block;
 }
@@ -456,7 +453,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 8px 0;
-  border-bottom: 1px solid #1a202c;
+  border-bottom: 1px solid var(--border-muted);
 }
 
 .dash-product-row:last-child {
@@ -472,14 +469,14 @@
 .dash-product-rank {
   width: 24px;
   height: 24px;
-  background: #1e2433;
+  background: var(--bg-hover);
   border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.74rem;
   font-weight: 700;
-  color: #94a3b8;
+  color: var(--text-secondary);
 }
 
 .dash-product-name {
@@ -490,7 +487,7 @@
 
 .dash-product-sold {
   font-size: 0.8rem;
-  color: #94a3b8;
+  color: var(--accent-amber);
   font-weight: 600;
 }
 
@@ -506,7 +503,7 @@
   display: flex;
   justify-content: space-between;
   padding: 8px 0;
-  border-bottom: 1px solid #1a202c;
+  border-bottom: 1px solid var(--border-muted);
 }
 
 .dash-info-item:last-child {
@@ -514,11 +511,11 @@
 }
 
 .dash-info-key {
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .dash-info-val {
-  color: #ffffff;
+  color: var(--text-primary);
   font-weight: 600;
 }
 
@@ -637,7 +634,7 @@
 }
 
 [data-theme="light"] .dash-bar:hover {
-  background: #0284c7;
+  background: var(--accent-amber);
 }
 
 [data-theme="light"] .dash-chart-bars {

@@ -2330,16 +2330,16 @@ Difference: ${CartEngine.formatCurrency(result.difference)}
     if (!pill || !label) return;
 
     if (connected) {
-      pill.style.background = 'rgba(16, 185, 129, 0.12)';
-      pill.style.borderColor = 'rgba(16, 185, 129, 0.35)';
+      pill.style.background = 'rgba(245, 158, 11, 0.12)';
+      pill.style.borderColor = 'rgba(245, 158, 11, 0.35)';
       const dot = pill.querySelector('.status-dot');
-      if (dot) dot.style.background = '#10b981';
+      if (dot) dot.style.background = '#f59e0b';
       label.innerText = `SQLite: Online (${status?.totalRecords || 57} rows)`;
     } else {
-      pill.style.background = 'rgba(239, 68, 68, 0.12)';
-      pill.style.borderColor = 'rgba(239, 68, 68, 0.35)';
+      pill.style.background = 'rgba(255, 255, 255, 0.05)';
+      pill.style.borderColor = 'rgba(255, 255, 255, 0.15)';
       const dot = pill.querySelector('.status-dot');
-      if (dot) dot.style.background = '#ef4444';
+      if (dot) dot.style.background = '#71717a';
       label.innerText = 'SQLite: Offline (Fallback)';
     }
   }
@@ -2366,7 +2366,7 @@ Difference: ${CartEngine.formatCurrency(result.difference)}
     if (sizeEl) sizeEl.innerText = status ? status.fileSizeFormatted : '80.0 KB';
     if (statusEl) {
       statusEl.innerText = isConnected ? 'Connected' : 'Offline';
-      statusEl.style.color = isConnected ? '#10b981' : '#ef4444';
+      statusEl.style.color = isConnected ? '#f59e0b' : '#71717a';
     }
 
     // 2. Fetch Table rows

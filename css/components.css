@@ -118,9 +118,9 @@
 }
 
 .tender-method-btn.active {
-  background: var(--bg-hover);
-  color: #ffffff;
-  border-color: #ffffff;
+  background: var(--accent-amber);
+  color: #000000;
+  border-color: var(--accent-amber);
   font-weight: 700;
 }
 
@@ -151,9 +151,9 @@
 }
 
 .cash-chip.active {
-  background: #f4f4f5;
-  color: #09090b;
-  border-color: #ffffff;
+  background: var(--accent-amber);
+  color: #000000;
+  border-color: var(--accent-amber);
   font-weight: 700;
 }
 
@@ -254,9 +254,9 @@
   animation: toastSlide 200ms ease-out;
 }
 
-.toast.success { border-left: 4px solid var(--accent-emerald); }
-.toast.error   { border-left: 4px solid var(--accent-crimson); }
-.toast.info    { border-left: 4px solid var(--accent-sky); }
+.toast.success { border-left: 4px solid var(--accent-amber); }
+.toast.error   { border-left: 4px solid var(--border-focus); }
+.toast.info    { border-left: 4px solid var(--accent-amber); }
 
 @keyframes toastSlide {
   from { transform: translateX(50px); opacity: 0; }

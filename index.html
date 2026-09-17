@@ -11,13 +11,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   
   <!-- CSS Design System -->
-  <link rel="stylesheet" href="css/tokens.css?v=21">
-  <link rel="stylesheet" href="css/layout.css?v=21">
-  <link rel="stylesheet" href="css/pos.css?v=21">
-  <link rel="stylesheet" href="css/kds.css?v=21">
-  <link rel="stylesheet" href="css/cash-drawer.css?v=21">
-  <link rel="stylesheet" href="css/dashboard.css?v=21">
-  <link rel="stylesheet" href="css/components.css?v=21">
+  <link rel="stylesheet" href="css/tokens.css?v=22">
+  <link rel="stylesheet" href="css/layout.css?v=22">
+  <link rel="stylesheet" href="css/pos.css?v=22">
+  <link rel="stylesheet" href="css/kds.css?v=22">
+  <link rel="stylesheet" href="css/cash-drawer.css?v=22">
+  <link rel="stylesheet" href="css/dashboard.css?v=22">
+  <link rel="stylesheet" href="css/components.css?v=22">
 </head>
 <body>
 
@@ -112,8 +112,8 @@
         <button class="quick-action-btn" id="theme-toggle-btn" title="Toggle Light / Dark mode" style="display: flex; align-items: center; gap: 6px;">
           <span id="theme-btn-label">Light mode</span>
         </button>
-        <div class="shift-status-pill" id="top-db-status-pill" title="SQLite Database Status" style="background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3);">
-          <span class="status-dot" style="background: #10b981;"></span>
+        <div class="shift-status-pill" id="top-db-status-pill" title="SQLite Database Status" style="background: var(--accent-amber-glow); border-color: rgba(245, 158, 11, 0.35);">
+          <span class="status-dot" style="background: var(--accent-amber);"></span>
           <span id="top-db-status-label">SQLite Online</span>
         </div>
         <div class="shift-status-pill">
@@ -661,7 +661,7 @@
             </div>
             <div class="metric-card highlight">
               <span class="metric-label">Connection</span>
-              <span class="metric-value" id="db-metric-status" style="color: #10b981;">Connected</span>
+              <span class="metric-value" id="db-metric-status" style="color: var(--accent-amber);">Connected</span>
             </div>
           </div>
 
@@ -779,7 +779,7 @@
 
         <div style="margin-top: 12px; background: var(--bg-elevated); padding: 10px 14px; border-radius: var(--radius-md); display: flex; justify-content: space-between; align-items: center;">
           <span style="font-weight: 600; color: var(--text-secondary);">Change:</span>
-          <span style="font-family: var(--font-mono); font-size: 1.15rem; font-weight: 600; color: #34d399;" id="tender-change-due">Rs. 0.00</span>
+          <span style="font-family: var(--font-mono); font-size: 1.15rem; font-weight: 600; color: var(--accent-amber);" id="tender-change-due">Rs. 0.00</span>
         </div>
       </div>
     </div>
@@ -897,7 +897,7 @@
 <div id="toast-shelf"></div>
 
 <!-- Application Entry Point (Bundle works offline via file:// and via localhost) -->
-<script src="js/bundle.js?v=20"></script>
+<script src="js/bundle.js?v=22"></script>
 
 </body>
 </html>
